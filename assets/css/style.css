@@ -992,3 +992,38 @@ header nav {
         font-size: 0.7rem;
     }
 }
+
+
+/* ===== Role badge, form hapus, peringatan ===== */
+.role-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
+}
+
+.role-badge.role-admin {
+    background-color: #f0ad4e;
+}
+
+.catalog-actions form,
+.ranking-actions form {
+    margin: 0;
+    display: flex;
+}
+
+/* Tombol Hapus ada di dalam <form>, jadi selalu :first-child; pastikan tetap merah. */
+.catalog-actions form button.btn-hapus,
+.ranking-actions form button.btn-hapus {
+    background-color: #d9534f;
+    color: #fff;
+    padding: 0.35rem 0.7rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}

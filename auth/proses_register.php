@@ -1,5 +1,11 @@
 <?php
-require_once __DIR__ . '/includes/session.php';
+define('SIMPLETOP_DB_OPTIONAL', true);
+require_once __DIR__ . '/../includes/session.php';
+
+if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+    header('Location: register.php');
+    exit;
+}
 
 $nama = trim($_POST['nama'] ?? '');
 $email = trim($_POST['email'] ?? '');
@@ -18,6 +24,10 @@ if (strlen($password) < 8) {
 }
 if ($password !== $passwordConfirm) {
     $errors[] = "Konfirmasi kata sandi tidak cocok.";
+}
+
+if (empty($errors) && !($pdo instanceof PDO)) {
+    $errors[] = "Layanan sedang tidak tersedia. Coba lagi beberapa saat.";
 }
 
 if (empty($errors)) {

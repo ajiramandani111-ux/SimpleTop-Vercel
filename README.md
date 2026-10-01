@@ -11,6 +11,7 @@ SimpleTop-php/
 │   ├── header.php             # Topbar promo + navbar
 │   ├── footer.php             # Footer
 │   ├── koneksi.php            # Koneksi PDO ke PostgreSQL
+│   ├── auth.php               # Guard clause login (+ role, CSRF, Ingat Saya, rate limit di file pendukung)
 │   └── seed_data.php          # (kosong; akun kini di database)
 ├── sql/
 │   └── 01_laptop_bestseller.sql   # Skema + data awal tabel laptop & bestseller
@@ -25,11 +26,10 @@ SimpleTop-php/
 │   ├── list.php                # Produk terlaris (ranking list) — SELECT * FROM bestseller
 │   ├── tambah.php              # Form tambah data terlaris
 │   └── proses_tambah.php       # Validasi & INSERT via prepared statement
-├── login.php                   # Halaman masuk
-├── register.php                # Halaman daftar akun
-├── proses_login.php
-├── proses_register.php
-├── logout.php
+├── auth/
+│   ├── login.php, proses_login.php
+│   ├── register.php, proses_register.php
+│   └── logout.php
 ├── docs/wireframe.md
 ├── README.md
 └── Dokumentasi/
@@ -54,6 +54,11 @@ SimpleTop-php/
 ## Fitur Utama
 
 - **Autentikasi sederhana** — registrasi & login dengan akun di tabel `users` (password di-hash) dan session di tabel `sessions`, navbar berubah otomatis menampilkan "Halo, {nama}" saat sudah login.
+- **Kontrol akses berbasis role** — kolom `users.role` (`admin`/`petugas`). Halaman tambah hanya untuk yang sudah login (guard `includes/auth.php`); hapus laptop/terlaris (`hapus.php`) hanya untuk `admin`, dengan token CSRF. Beranda & katalog tetap publik.
+- **Ingat Saya** — cookie 30 hari (`selector:validator`, hash disimpan di tabel `remember_tokens`).
+- **Pembatasan login gagal** — 5 kali gagal per email = terkunci 15 menit (tabel `login_attempts`), ada peringatan sisa percobaan.
+- **Tahan database mati** — halaman terkunci tanpa login tetap diarahkan ke Login, bukan error koneksi.
+- Detail & diskusi keamanan: [`docs/auth-lanjutan.md`](docs/auth-lanjutan.md).
 - **Katalog Laptop & Produk Terlaris** — data disimpan permanen di **PostgreSQL** (tabel `laptop` & `bestseller`), diambil dengan `SELECT * FROM ...` dan ditambah lewat form dengan validasi server + `INSERT` via prepared statement (`proses_tambah.php`).
 - **Kartu statistik di beranda** — total model laptop, total unit stok, dan total produk terlaris dihitung langsung dari database memakai `SELECT COUNT(*)` / `SUM()`.
 - **Pencarian** — kolom cari di setiap halaman katalog memfilter kartu/list secara langsung (client-side).
@@ -67,7 +72,7 @@ Project ini dapat dijalankan di Vercel menggunakan container. Vercel mendeteksi 
 3. Biarkan Root Directory di folder project ini dan gunakan konfigurasi default. `Dockerfile.vercel` akan digunakan untuk build container.
 4. Tambahkan environment variable `DATABASE_URL` di **Project Settings → Environment Variables**. Gunakan connection string PostgreSQL dari provider database kamu. Untuk database hosted seperti Neon, gunakan connection string yang mendukung koneksi dari serverless/container dan biasanya menyertakan `sslmode=require`.
 5. Deploy ulang setelah environment variable disimpan.
-6. Jalankan **dua** file SQL berurutan pada database PostgreSQL yang digunakan: `sql/01_laptop_bestseller.sql` lalu `sql/02_users_sessions.sql`. Jika tabel `laptop` & `bestseller` sudah ada dan terisi, jalankan hanya `02_users_sessions.sql`.
+6. Jalankan file SQL berurutan pada database PostgreSQL yang digunakan: `sql/01_laptop_bestseller.sql`, `sql/02_users_sessions.sql`, lalu `sql/03_roles_remember_ratelimit.sql`. Jika tabel sudah ada dan terisi, jalankan hanya file yang belum pernah dijalankan (cek tabel `schema_migrations`). Setelah `03`, jadikan satu akun admin: `UPDATE users SET role='admin' WHERE LOWER(email)=LOWER('emailanda@contoh.com');`
 7. Pastikan `Dockerfile.vercel` berada di root repository (bukan di dalam sub-folder), atau atur **Root Directory** di Vercel. Tidak perlu `vercel.json`.
 
 Untuk lokal Laragon, aplikasi tetap memakai fallback PostgreSQL `localhost:5432`, database `simpletop`, user `postgres`, password `postgres` jika tidak ada environment variable.
@@ -78,4 +83,4 @@ Untuk lokal Laragon, aplikasi tetap memakai fallback PostgreSQL `localhost:5432`
 
 - Data **laptop & bestseller** tersimpan permanen di PostgreSQL (tidak hilang saat service di-restart, selama volume database Railway tidak dihapus).
 - Data **akun login** disimpan di tabel `users` (password memakai `password_hash`), jadi tidak hilang saat service restart.
-- Tombol "Hapus" di tampilan katalog/ranking masih bersifat tampilan (menghapus dari DOM lewat JavaScript), belum terhubung ke `DELETE` di database.
+- Tombol "Hapus" (khusus admin) menjalankan `DELETE` di database lewat `hapus.php`. Tombol "Edit" masih berupa tampilan saja.

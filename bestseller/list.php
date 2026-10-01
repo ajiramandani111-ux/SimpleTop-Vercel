@@ -30,10 +30,18 @@ $daftarBestSeller = $pdo->query("SELECT * FROM bestseller ORDER BY total_penjual
                         &bull; <span class="rating-star">&#9733;</span> <?php echo htmlspecialchars($item['rating']); ?>
                     </p>
                 </div>
+                <?php if ($user): ?>
                 <div class="ranking-actions">
                     <button type="button">Edit</button>
-                    <button type="button" class="btn-hapus">Hapus</button>
+                    <?php if (is_admin()): ?>
+                    <form action="hapus.php" method="POST" class="form-hapus">
+                        <?php echo csrf_field(); ?>
+                        <input type="hidden" name="id" value="<?php echo (int) $item['id']; ?>">
+                        <button type="submit" class="btn-hapus">Hapus</button>
+                    </form>
+                    <?php endif; ?>
                 </div>
+                <?php endif; ?>
             </article>
             <?php endforeach; ?>
         <?php endif; ?>

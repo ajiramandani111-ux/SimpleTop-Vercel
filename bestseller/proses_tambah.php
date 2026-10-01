@@ -1,6 +1,11 @@
 <?php
-require_once __DIR__ . '/../includes/session.php';
+require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/koneksi.php';
+
+if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+    header('Location: tambah.php');
+    exit;
+}
 
 $merk = trim($_POST['merk'] ?? '');
 $seri = trim($_POST['seri'] ?? '');

@@ -41,10 +41,18 @@ function statusStok($stok) {
                 </p>
                 <p class="catalog-harga">Rp<?php echo number_format((float) $laptop['harga'], 0, ',', '.'); ?></p>
                 <p class="catalog-stok">Stok: <?php echo (int) $laptop['stok']; ?> unit</p>
+                <?php if ($user): ?>
                 <div class="catalog-actions">
                     <button type="button">Edit</button>
-                    <button type="button" class="btn-hapus">Hapus</button>
+                    <?php if (is_admin()): ?>
+                    <form action="hapus.php" method="POST" class="form-hapus">
+                        <?php echo csrf_field(); ?>
+                        <input type="hidden" name="id" value="<?php echo (int) $laptop['id']; ?>">
+                        <button type="submit" class="btn-hapus">Hapus</button>
+                    </form>
+                    <?php endif; ?>
                 </div>
+                <?php endif; ?>
             </article>
             <?php endforeach; ?>
         <?php endif; ?>
