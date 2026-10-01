@@ -69,7 +69,7 @@ if ($databaseUrl) {
 
 try {
     // connect_timeout: saat database mati, gagal cepat (bukan menggantung lama).
-    $dsn = "pgsql:host={$db_host};port={$db_port};dbname={$db_name};connect_timeout=10";
+    $dsn = "pgsql:host={$db_host};port={$db_port};dbname={$db_name}";
     if ($sslmode) {
         $dsn .= ";sslmode={$sslmode}";
     }
