@@ -1,3 +1,21 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- jangan diubah
+
+
+
+
 -- Jobsheet 8 (SimpleTop): skema awal database simpletop (PostgreSQL)
 -- Jalankan setelah membuat database, misal:
 --   createdb simpletop

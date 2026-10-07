@@ -31,12 +31,13 @@ $user = $_SESSION['user'] ?? null;
     <div class="header-right">
         <?php if ($user): ?>
             <span class="nav-user">Halo, <?php echo htmlspecialchars($user['nama']); ?></span>
-            <a href="<?php echo $base; ?>logout.php" class="nav-login-btn">Keluar</a>
+            <span class="role-badge role-<?php echo htmlspecialchars($user['role'] ?? 'customer'); ?>"><?php echo htmlspecialchars($user['role'] ?? 'customer'); ?></span>
+            <a href="<?php echo $base; ?>auth/logout.php" class="nav-login-btn">Keluar</a>
         <?php else: ?>
-            <a href="<?php echo $base; ?>login.php" class="nav-login-btn">
+            <a href="<?php echo $base; ?>auth/login.php" class="nav-login-btn">
                 <i class="bi bi-person-circle"></i> Masuk
             </a>
-            <a href="<?php echo $base; ?>register.php" class="nav-login-btn nav-register-btn">Daftar</a>
+            <a href="<?php echo $base; ?>auth/register.php" class="nav-login-btn nav-register-btn">Daftar</a>
         <?php endif; ?>
         <button type="button" id="nav-toggle-btn" class="nav-toggle-label" aria-label="Menu">&#9776;</button>
     </div>
@@ -45,9 +46,16 @@ $user = $_SESSION['user'] ?? null;
         <ul>
             <li><a href="<?php echo $base; ?>index.php">Beranda</a></li>
             <li><a href="<?php echo $base; ?>laptop/list.php">Katalog Laptop</a></li>
+            <?php if (is_admin()): ?>
             <li><a href="<?php echo $base; ?>laptop/tambah.php">Tambah Laptop</a></li>
+            <?php endif; ?>
             <li><a href="<?php echo $base; ?>bestseller/list.php">Terlaris</a></li>
+            <?php if (is_admin()): ?>
             <li><a href="<?php echo $base; ?>bestseller/tambah.php">Tambah Terlaris</a></li>
+            <?php endif; ?>
+            <?php if ($user): ?>
+            <li><a href="<?php echo $base; ?>pesanan/list.php"><?php echo is_admin() ? 'Semua Pesanan' : 'Pesanan Saya'; ?></a></li>
+            <?php endif; ?>
         </ul>
     </nav>
 </header>

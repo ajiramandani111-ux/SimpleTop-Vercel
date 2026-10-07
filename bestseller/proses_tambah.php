@@ -1,6 +1,13 @@
 <?php
-require_once __DIR__ . '/../includes/session.php';
+require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/koneksi.php';
+
+if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+    header('Location: tambah.php');
+    exit;
+}
+
+require_admin('list.php'); // hanya admin yang boleh menambah produk
 
 $merk = trim($_POST['merk'] ?? '');
 $seri = trim($_POST['seri'] ?? '');
@@ -26,6 +33,8 @@ if (!empty($errors)) {
     header('Location: tambah.php');
     exit;
 }
+
+require_admin('list.php'); // hanya admin yang boleh menambah produk
 
 $stmt = $pdo->prepare(
     "INSERT INTO bestseller (merk, seri, total_penjualan, rating)

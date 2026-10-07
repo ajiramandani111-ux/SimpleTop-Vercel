@@ -992,3 +992,92 @@ header nav {
         font-size: 0.7rem;
     }
 }
+
+
+/* ===== Role badge, form hapus, peringatan ===== */
+.role-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
+}
+
+.role-badge.role-admin {
+    background-color: #f0ad4e;
+}
+
+.catalog-actions form,
+.ranking-actions form {
+    margin: 0;
+    display: flex;
+}
+
+/* Tombol Hapus ada di dalam <form>, jadi selalu :first-child; pastikan tetap merah. */
+.catalog-actions form button.btn-hapus,
+.ranking-actions form button.btn-hapus {
+    background-color: #d9534f;
+    color: #fff;
+    padding: 0.35rem 0.7rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+/* ===== Pemesanan ===== */
+.form-pesan {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin: 0 0 0.6rem;
+}
+
+.form-pesan input[type="number"] {
+    width: 4.2rem;
+    padding: 0.35rem 0.4rem;
+    border: 1px solid #c9d3de;
+    border-radius: 4px;
+}
+
+.btn-pesan {
+    flex: 1;
+    padding: 0.4rem 0.7rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #1f6feb;
+    color: #fff;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.btn-pesan:hover {
+    background-color: #1858bd;
+}
+
+.catalog-login-hint {
+    display: block;
+    font-size: 0.82rem;
+    color: #55677a;
+    margin: 0 0 0.6rem;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+
+.role-badge.role-customer {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.table-scroll {
+    overflow-x: auto;
+}

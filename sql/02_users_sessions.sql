@@ -1,3 +1,16 @@
+
+
+
+
+-- jangan diubah
+
+
+
+
+
+
+
+
 -- Tabel akun & session (agar login tetap bekerja di Vercel yang stateless).
 -- Aman dijalankan berulang kali.
 

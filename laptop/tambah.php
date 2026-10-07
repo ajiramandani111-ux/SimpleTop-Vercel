@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../includes/auth.php';
+require_admin('list.php'); // hanya admin yang boleh menambah produk
 $page_title = "Tambah Laptop";
 include __DIR__ . '/../includes/header.php';
 ?>
