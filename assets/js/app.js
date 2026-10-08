@@ -11,6 +11,8 @@ function initNavToggle() {
 }
 
 // ===== Konfirmasi hapus (kartu katalog / item ranking) =====
+// Tombol Hapus ada di dalam <form> (khusus admin): bila dikonfirmasi, form dikirim
+// ke hapus.php dan server yang menghapus dari database. Bila batal, pengiriman dibatalkan.
 function initHapusConfirm() {
     document.addEventListener("click", function (e) {
         const btn = e.target.closest(".btn-hapus");
@@ -19,7 +21,14 @@ function initHapusConfirm() {
         const item = btn.closest(".searchable-item");
         const nama = item ? item.querySelector(".item-name")?.textContent : "data ini";
         const yakin = confirm("Yakin ingin menghapus \"" + nama + "\"?");
-        if (yakin && item) {
+
+        if (!yakin) {
+            e.preventDefault();
+            return;
+        }
+
+        // Tanpa form (perilaku lama): hanya hapus dari tampilan.
+        if (!btn.closest("form") && item) {
             item.remove();
         }
     });

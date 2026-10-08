@@ -1,12 +1,17 @@
 <?php
-$page_title = "Daftar";
-$body_class = "auth-page";
-include __DIR__ . '/includes/header.php';
+// Halaman ini harus tetap bisa tampil walau database sedang mati.
+define('SIMPLETOP_DB_OPTIONAL', true);
+require_once __DIR__ . '/../includes/session.php';
 
-if ($user) {
-    header('Location: index.php');
+// Sudah login? Redirect sebelum ada output HTML.
+if (is_logged_in()) {
+    header('Location: ../index.php');
     exit;
 }
+
+$page_title = "Daftar";
+$body_class = "auth-page";
+include __DIR__ . '/../includes/header.php';
 ?>
 <div class="auth-card">
     <div class="auth-icon"><i class="bi bi-person-plus-fill"></i></div>
@@ -14,6 +19,7 @@ if ($user) {
     <p class="auth-subtitle">Daftar untuk mulai belanja laptop di SimpleTop</p>
 
     <form action="proses_register.php" method="POST" novalidate>
+        <?php echo csrf_field(); ?>
         <div class="form-group">
             <label for="nama">Nama Lengkap</label>
             <div class="input-icon-wrap">
@@ -57,4 +63,4 @@ if ($user) {
 
     <p class="auth-footer-note">Sudah punya akun? <a href="login.php">Masuk di sini</a></p>
 </div>
-<?php include __DIR__ . '/includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/footer.php'; ?>

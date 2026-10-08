@@ -24,15 +24,15 @@ $produkPilihan = $pdo->query("SELECT * FROM laptop ORDER BY id LIMIT 3")->fetchA
 
 <section class="ringkasan-strip">
     <article class="ringkasan-card">
-        <span class="ringkasan-angka"><?php echo $totalLaptop; ?></span>
+        <span class="ringkasan-angka"><?php echo (int) $totalLaptop; ?></span>
         <span class="ringkasan-label">Model Laptop</span>
     </article>
     <article class="ringkasan-card">
-        <span class="ringkasan-angka"><?php echo $totalStok; ?></span>
+        <span class="ringkasan-angka"><?php echo (int) $totalStok; ?></span>
         <span class="ringkasan-label">Unit Siap Kirim</span>
     </article>
     <article class="ringkasan-card">
-        <span class="ringkasan-angka"><?php echo $totalBestSeller; ?></span>
+        <span class="ringkasan-angka"><?php echo (int) $totalBestSeller; ?></span>
         <span class="ringkasan-label">Produk Terlaris</span>
     </article>
 </section>
@@ -61,7 +61,7 @@ $produkPilihan = $pdo->query("SELECT * FROM laptop ORDER BY id LIMIT 3")->fetchA
         <?php foreach ($produkPilihan as $laptop): ?>
         <article class="produk-card">
             <i class="bi bi-laptop produk-icon"></i>
-            <h3><?php echo htmlspecialchars($laptop['merk'] . ' ' . $laptop['seri']); ?></h3>
+            <h3><?php echo e($laptop['merk'] . ' ' . $laptop['seri']); ?></h3>
             <p class="produk-harga">Rp<?php echo number_format((float) $laptop['harga'], 0, ',', '.'); ?></p>
             <p class="produk-stok">Stok: <?php echo (int) $laptop['stok']; ?></p>
         </article>

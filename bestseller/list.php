@@ -21,19 +21,25 @@ $daftarBestSeller = $pdo->query("SELECT * FROM bestseller ORDER BY total_penjual
                 $cari = strtolower($item['merk'] . ' ' . $item['seri']);
                 $rank = $i + 1;
             ?>
-            <article class="ranking-item searchable-item" data-search="<?php echo htmlspecialchars($cari); ?>">
-                <div class="rank-badge rank-<?php echo $rank <= 3 ? $rank : 'lain'; ?>">#<?php echo $rank; ?></div>
+            <article class="ranking-item searchable-item" data-search="<?php echo e($cari); ?>">
+                <div class="rank-badge rank-<?php echo $rank <= 3 ? (int) $rank : 'lain'; ?>">#<?php echo (int) $rank; ?></div>
                 <div class="ranking-info">
-                    <h3 class="item-name"><?php echo htmlspecialchars($item['merk'] . ' ' . $item['seri']); ?></h3>
+                    <h3 class="item-name"><?php echo e($item['merk'] . ' ' . $item['seri']); ?></h3>
                     <p class="ranking-meta">
                         <?php echo (int) $item['total_penjualan']; ?> unit terjual
-                        &bull; <span class="rating-star">&#9733;</span> <?php echo htmlspecialchars($item['rating']); ?>
+                        &bull; <span class="rating-star">&#9733;</span> <?php echo e($item['rating']); ?>
                     </p>
                 </div>
+                <?php if (is_admin()): ?>
                 <div class="ranking-actions">
                     <button type="button">Edit</button>
-                    <button type="button" class="btn-hapus">Hapus</button>
+                    <form action="hapus.php" method="POST" class="form-hapus">
+                        <?php echo csrf_field(); ?>
+                        <input type="hidden" name="id" value="<?php echo (int) $item['id']; ?>">
+                        <button type="submit" class="btn-hapus">Hapus</button>
+                    </form>
                 </div>
+                <?php endif; ?>
             </article>
             <?php endforeach; ?>
         <?php endif; ?>

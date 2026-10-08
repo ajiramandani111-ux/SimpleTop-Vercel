@@ -1,10 +1,13 @@
 <?php
+require_once __DIR__ . '/../includes/auth.php';
+require_admin('list.php'); // hanya admin yang boleh menambah produk
 $page_title = "Tambah Best Seller";
 include __DIR__ . '/../includes/header.php';
 ?>
 <section>
     <h2>Tambah Data Best Seller</h2>
     <form action="proses_tambah.php" method="POST">
+        <?php echo csrf_field(); ?>
         <div class="form-group">
             <label for="merk">Merk</label>
             <input type="text" id="merk" name="merk" placeholder="Contoh: Apple" required>

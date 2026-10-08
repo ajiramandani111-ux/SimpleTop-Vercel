@@ -4,6 +4,10 @@
 // kapan saja, sehingga session berbasis file akan hilang.
 
 require_once __DIR__ . '/koneksi.php';
+require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/csrf.php';
+require_once __DIR__ . '/auth_functions.php';
+require_once __DIR__ . '/remember.php';
 
 if (session_status() === PHP_SESSION_NONE) {
 
@@ -83,18 +87,26 @@ if (session_status() === PHP_SESSION_NONE) {
         }
     }
 
-    session_set_save_handler(new DbSessionHandler($pdo), true);
-
-    $__https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-        || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
+    // Jika database tidak bisa dihubungi ($pdo null; hanya terjadi pada halaman
+    // yang menandai koneksi sebagai opsional), pakai session bawaan PHP (file)
+    // sementara. Pengunjung tidak akan dianggap login, sehingga guard auth.php
+    // mengarahkan ke halaman Login alih-alih menampilkan error database.
+    if ($pdo instanceof PDO) {
+        session_set_save_handler(new DbSessionHandler($pdo), true);
+    }
 
     session_set_cookie_params([
         'lifetime' => 0,
         'path'     => '/',
-        'secure'   => $__https,
+        'secure'   => is_https(),
         'httponly' => true,
         'samesite' => 'Lax',
     ]);
 
     session_start();
+
+    // "Ingat Saya": belum login tetapi punya cookie remember_me yang sah -> login otomatis.
+    if ($pdo instanceof PDO && empty($_SESSION['user']) && !empty($_COOKIE[REMEMBER_COOKIE])) {
+        remember_autologin($pdo);
+    }
 }

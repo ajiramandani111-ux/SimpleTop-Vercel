@@ -10,7 +10,7 @@
 
 <?php if (!empty($extra_scripts)): ?>
     <?php foreach ($extra_scripts as $src): ?>
-        <script src="<?php echo $src; ?>"></script>
+        <script src="<?php echo e($src); ?>"></script>
     <?php endforeach; ?>
 <?php endif; ?>
 
