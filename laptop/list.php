@@ -49,12 +49,6 @@ function statusStok($stok) {
                 </p>
                 <p class="catalog-harga">Rp<?php echo number_format((float) $laptop['harga'], 0, ',', '.'); ?></p>
                 <p class="catalog-stok">Stok: <?php echo (int) $laptop['stok']; ?> unit</p>
-<<<<<<< Updated upstream
-                <?php if ($user): ?>
-                <div class="catalog-actions">
-                    <button type="button">Edit</button>
-                    <?php if (is_admin()): ?>
-=======
                 <?php if (!$aktif): ?>
                 <p class="catalog-login-hint">Tidak tampil di katalog publik.</p>
                 <?php elseif (!$user): ?>
@@ -74,21 +68,17 @@ function statusStok($stok) {
                 <div class="catalog-actions">
                     <a href="edit.php?id=<?php echo (int) $laptop['id']; ?>" class="btn-edit">Edit</a>
                     <?php if ($aktif): ?>
->>>>>>> Stashed changes
                     <form action="hapus.php" method="POST" class="form-hapus">
                         <?php echo csrf_field(); ?>
                         <input type="hidden" name="id" value="<?php echo (int) $laptop['id']; ?>">
                         <button type="submit" class="btn-hapus">Hapus</button>
                     </form>
-<<<<<<< Updated upstream
-=======
                     <?php else: ?>
                     <form action="aktifkan.php" method="POST" class="form-aktifkan">
                         <?php echo csrf_field(); ?>
                         <input type="hidden" name="id" value="<?php echo (int) $laptop['id']; ?>">
                         <button type="submit" class="btn-tampilkan">Tampilkan</button>
                     </form>
->>>>>>> Stashed changes
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>

@@ -68,12 +68,7 @@ if ($databaseUrl) {
 }
 
 try {
-    // connect_timeout: saat database mati, gagal cepat (bukan menggantung lama).
-<<<<<<< Updated upstream
     $dsn = "pgsql:host={$db_host};port={$db_port};dbname={$db_name}";
-=======
-    $dsn = "pgsql:host={$db_host};port={$db_port};dbname={$db_name};connect_timeout=10";
->>>>>>> Stashed changes
     if ($sslmode) {
         $dsn .= ";sslmode={$sslmode}";
     }

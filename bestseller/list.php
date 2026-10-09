@@ -42,31 +42,21 @@ $urutan = 0; // peringkat hanya dihitung untuk data aktif
                         &bull; <span class="rating-star">&#9733;</span> <?php echo e($item['rating']); ?>
                     </p>
                 </div>
-<<<<<<< Updated upstream
-                <?php if ($user): ?>
-                <div class="ranking-actions">
-                    <button type="button">Edit</button>
-                    <?php if (is_admin()): ?>
-=======
                 <?php if (is_admin()): ?>
                 <div class="ranking-actions">
                     <a href="edit.php?id=<?php echo (int) $item['id']; ?>" class="btn-edit">Edit</a>
                     <?php if ($aktif): ?>
->>>>>>> Stashed changes
                     <form action="hapus.php" method="POST" class="form-hapus">
                         <?php echo csrf_field(); ?>
                         <input type="hidden" name="id" value="<?php echo (int) $item['id']; ?>">
                         <button type="submit" class="btn-hapus">Hapus</button>
                     </form>
-<<<<<<< Updated upstream
-=======
                     <?php else: ?>
                     <form action="aktifkan.php" method="POST" class="form-aktifkan">
                         <?php echo csrf_field(); ?>
                         <input type="hidden" name="id" value="<?php echo (int) $item['id']; ?>">
                         <button type="submit" class="btn-tampilkan">Tampilkan</button>
                     </form>
->>>>>>> Stashed changes
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>

@@ -1,9 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/auth.php';
-<<<<<<< Updated upstream
-=======
 require_admin('list.php'); // hanya admin yang boleh menambah produk
->>>>>>> Stashed changes
 $page_title = "Tambah Best Seller";
 include __DIR__ . '/../includes/header.php';
 ?>

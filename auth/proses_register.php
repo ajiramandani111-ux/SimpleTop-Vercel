@@ -1,14 +1,6 @@
 <?php
 define('SIMPLETOP_DB_OPTIONAL', true);
 require_once __DIR__ . '/../includes/session.php';
-<<<<<<< Updated upstream
-
-if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-    header('Location: register.php');
-    exit;
-}
-=======
->>>>>>> Stashed changes
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     header('Location: register.php');

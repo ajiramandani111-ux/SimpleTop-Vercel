@@ -32,18 +32,12 @@ $user = $_SESSION['user'] ?? null;
 
     <div class="header-right">
         <?php if ($user): ?>
-<<<<<<< Updated upstream
-            <span class="nav-user">Halo, <?php echo htmlspecialchars($user['nama']); ?></span>
-            <span class="role-badge role-<?php echo htmlspecialchars($user['role'] ?? 'petugas'); ?>"><?php echo htmlspecialchars($user['role'] ?? 'petugas'); ?></span>
-            <a href="<?php echo $base; ?>auth/logout.php" class="nav-login-btn">Keluar</a>
-=======
             <span class="nav-user">Halo, <?php echo e($user['nama']); ?></span>
             <span class="role-badge role-<?php echo e($user['role'] ?? 'customer'); ?>"><?php echo e($user['role'] ?? 'customer'); ?></span>
             <form action="<?php echo $base; ?>auth/logout.php" method="POST" class="form-logout">
                 <?php echo csrf_field(); ?>
                 <button type="submit" class="nav-login-btn">Keluar</button>
             </form>
->>>>>>> Stashed changes
         <?php else: ?>
             <a href="<?php echo $base; ?>auth/login.php" class="nav-login-btn">
                 <i class="bi bi-person-circle"></i> Masuk
@@ -57,15 +51,6 @@ $user = $_SESSION['user'] ?? null;
         <ul>
             <li><a href="<?php echo $base; ?>index.php">Beranda</a></li>
             <li><a href="<?php echo $base; ?>laptop/list.php">Katalog Laptop</a></li>
-<<<<<<< Updated upstream
-            <?php if ($user): ?>
-            <li><a href="<?php echo $base; ?>laptop/tambah.php">Tambah Laptop</a></li>
-            <?php endif; ?>
-            <li><a href="<?php echo $base; ?>bestseller/list.php">Terlaris</a></li>
-            <?php if ($user): ?>
-            <li><a href="<?php echo $base; ?>bestseller/tambah.php">Tambah Terlaris</a></li>
-            <?php endif; ?>
-=======
             <?php if (is_admin()): ?>
             <li><a href="<?php echo $base; ?>laptop/tambah.php">Tambah Laptop</a></li>
             <?php endif; ?>
@@ -76,7 +61,6 @@ $user = $_SESSION['user'] ?? null;
             <?php if ($user): ?>
             <li><a href="<?php echo $base; ?>pesanan/list.php"><?php echo is_admin() ? 'Semua Pesanan' : 'Pesanan Saya'; ?></a></li>
             <?php endif; ?>
->>>>>>> Stashed changes
         </ul>
     </nav>
 </header>

@@ -2,19 +2,6 @@
 
 ## 1. Kontrol akses berbasis role
 
-<<<<<<< Updated upstream
-| Aksi | Tamu | Petugas | Admin |
-|---|---|---|---|
-| Lihat Beranda, Katalog, Terlaris | ✅ | ✅ | ✅ |
-| Tambah laptop / terlaris | ❌ → Login | ✅ | ✅ |
-| Hapus laptop / terlaris (`hapus.php`) | ❌ → Login | ❌ (ditolak + pesan) | ✅ |
-
-- `includes/auth.php` = guard login (di-include di **baris pertama** halaman).
-- `require_admin()` (di `includes/auth_functions.php`) = pengecekan role setelah guard.
-- Tombol Hapus hanya dirender untuk admin, **tetapi** server tetap memeriksa role + token CSRF
-  (menyembunyikan tombol bukan pengamanan).
-- Jadikan akun admin lewat SQL (lihat `sql/03_roles_remember_ratelimit.sql`).
-=======
 | Aksi | Tamu (belum login) | Customer (otomatis saat daftar) | Admin |
 |---|---|---|---|
 | Lihat Beranda, Katalog, Terlaris | ✅ | ✅ | ✅ |
@@ -31,7 +18,6 @@
   (menyembunyikan tombol bukan pengamanan).
 - Pemesanan memakai transaksi + `SELECT ... FOR UPDATE`, sehingga stok tidak bisa menjadi minus
   walau dua pembeli memesan bersamaan.
->>>>>>> Stashed changes
 
 ## 2. Ingat Saya — cara kerja & risiko
 

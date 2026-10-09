@@ -4,11 +4,8 @@
 // kapan saja, sehingga session berbasis file akan hilang.
 
 require_once __DIR__ . '/koneksi.php';
-<<<<<<< Updated upstream
-=======
 require_once __DIR__ . '/helpers.php';
 require_once __DIR__ . '/csrf.php';
->>>>>>> Stashed changes
 require_once __DIR__ . '/auth_functions.php';
 require_once __DIR__ . '/remember.php';
 

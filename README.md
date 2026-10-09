@@ -54,13 +54,9 @@ SimpleTop-php/
 ## Fitur Utama
 
 - **Autentikasi sederhana** — registrasi & login dengan akun di tabel `users` (password di-hash) dan session di tabel `sessions`, navbar berubah otomatis menampilkan "Halo, {nama}" saat sudah login.
-<<<<<<< Updated upstream
-- **Kontrol akses berbasis role** — kolom `users.role` (`admin`/`petugas`). Halaman tambah hanya untuk yang sudah login (guard `includes/auth.php`); hapus laptop/terlaris (`hapus.php`) hanya untuk `admin`, dengan token CSRF. Beranda & katalog tetap publik.
-=======
 - **Keamanan (Jobsheet 11)** — fungsi `e()` untuk XSS (`includes/helpers.php`), token CSRF di semua form POST termasuk login/logout (`includes/csrf.php`), regenerasi session setelah login, validasi input yang diperketat. Audit lengkap: [`docs/security-checklist.md`](docs/security-checklist.md).
 - **Edit & Hapus (soft delete)** — admin mengedit produk lewat form edit; "Hapus" hanya mengubah kolom `aktif`. Produk nonaktif tidak tampil di katalog/Beranda/ranking untuk publik dan tidak bisa dipesan, tetapi tampil redup bagi admin dengan tombol "Tampilkan".
 - **Role & pemesanan** — tamu hanya melihat produk; akun yang mendaftar otomatis `customer` (bisa melihat & memesan laptop, stok berkurang, riwayat di *Pesanan Saya*). Hanya `admin` yang bisa tambah/hapus produk dan melihat semua pesanan. Guard di `includes/auth.php`, aksi sensitif dilindungi token CSRF.
->>>>>>> Stashed changes
 - **Ingat Saya** — cookie 30 hari (`selector:validator`, hash disimpan di tabel `remember_tokens`).
 - **Pembatasan login gagal** — 5 kali gagal per email = terkunci 15 menit (tabel `login_attempts`), ada peringatan sisa percobaan.
 - **Tahan database mati** — halaman terkunci tanpa login tetap diarahkan ke Login, bukan error koneksi.
@@ -78,11 +74,7 @@ Project ini dapat dijalankan di Vercel menggunakan container. Vercel mendeteksi 
 3. Biarkan Root Directory di folder project ini dan gunakan konfigurasi default. `Dockerfile.vercel` akan digunakan untuk build container.
 4. Tambahkan environment variable `DATABASE_URL` di **Project Settings → Environment Variables**. Gunakan connection string PostgreSQL dari provider database kamu. Untuk database hosted seperti Neon, gunakan connection string yang mendukung koneksi dari serverless/container dan biasanya menyertakan `sslmode=require`.
 5. Deploy ulang setelah environment variable disimpan.
-<<<<<<< Updated upstream
-6. Jalankan file SQL berurutan pada database PostgreSQL yang digunakan: `sql/01_laptop_bestseller.sql`, `sql/02_users_sessions.sql`, lalu `sql/03_roles_remember_ratelimit.sql`. Jika tabel sudah ada dan terisi, jalankan hanya file yang belum pernah dijalankan (cek tabel `schema_migrations`). Setelah `03`, jadikan satu akun admin: `UPDATE users SET role='admin' WHERE LOWER(email)=LOWER('emailanda@contoh.com');`
-=======
 6. Jalankan file SQL berurutan pada database PostgreSQL yang digunakan: `sql/01_laptop_bestseller.sql`, `sql/02_users_sessions.sql`, `sql/03_roles_remember_ratelimit.sql`, `sql/04_customer_orders.sql`, lalu `sql/05_soft_delete.sql`. Jika tabel sudah ada dan terisi, jalankan hanya file yang belum pernah dijalankan (cek tabel `schema_migrations`). Setelah `03`, jadikan satu akun admin: `UPDATE users SET role='admin' WHERE LOWER(email)=LOWER('emailanda@contoh.com');`
->>>>>>> Stashed changes
 7. Pastikan `Dockerfile.vercel` berada di root repository (bukan di dalam sub-folder), atau atur **Root Directory** di Vercel. Tidak perlu `vercel.json`.
 
 Untuk lokal Laragon, aplikasi tetap memakai fallback PostgreSQL `localhost:5432`, database `simpletop`, user `postgres`, password `postgres` jika tidak ada environment variable.
@@ -93,8 +85,4 @@ Untuk lokal Laragon, aplikasi tetap memakai fallback PostgreSQL `localhost:5432`
 
 - Data **laptop & bestseller** tersimpan permanen di PostgreSQL (tidak hilang saat service di-restart, selama volume database Railway tidak dihapus).
 - Data **akun login** disimpan di tabel `users` (password memakai `password_hash`), jadi tidak hilang saat service restart.
-<<<<<<< Updated upstream
-- Tombol "Hapus" (khusus admin) menjalankan `DELETE` di database lewat `hapus.php`. Tombol "Edit" masih berupa tampilan saja.
-=======
 - Admin dapat **mengedit** laptop & terlaris (`edit.php` / `proses_edit.php`). Tombol "Hapus" bersifat **nonaktifkan** (soft delete): data tetap ada di database, hanya disembunyikan dari pengunjung & customer, dan admin bisa menekan "Tampilkan" untuk mengaktifkannya lagi.
->>>>>>> Stashed changes

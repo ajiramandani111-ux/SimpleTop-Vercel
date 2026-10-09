@@ -105,11 +105,7 @@ function remember_autologin(PDO $pdo): bool
             'id'    => (int) $row['id'],
             'nama'  => $row['nama'],
             'email' => $row['email'],
-<<<<<<< Updated upstream
-            'role'  => $row['role'] ?? 'petugas',
-=======
             'role'  => $row['role'] ?? 'customer',
->>>>>>> Stashed changes
         ];
         return true;
     } catch (PDOException $e) {

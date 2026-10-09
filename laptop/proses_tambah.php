@@ -1,8 +1,5 @@
 <?php
-<<<<<<< Updated upstream
-=======
 // Urutan pengecekan: login -> metode POST -> role admin -> CSRF -> validasi -> database.
->>>>>>> Stashed changes
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/koneksi.php';
 require_once __DIR__ . '/../includes/validasi.php';
@@ -11,16 +8,6 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     header('Location: tambah.php');
     exit;
 }
-<<<<<<< Updated upstream
-
-$merk = trim($_POST['merk'] ?? '');
-$seri = trim($_POST['seri'] ?? '');
-$tahun = $_POST['tahun'] ?? '';
-$harga = $_POST['harga'] ?? '';
-$stok = $_POST['stok'] ?? '';
-$kategori = trim($_POST['kategori'] ?? '');
-=======
->>>>>>> Stashed changes
 
 require_admin('list.php');
 csrf_verify('tambah.php');
