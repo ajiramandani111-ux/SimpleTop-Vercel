@@ -20,7 +20,11 @@ function initHapusConfirm() {
 
         const item = btn.closest(".searchable-item");
         const nama = item ? item.querySelector(".item-name")?.textContent : "data ini";
+<<<<<<< Updated upstream
         const yakin = confirm("Yakin ingin menghapus \"" + nama + "\"?");
+=======
+        const yakin = confirm("Hapus \"" + nama + "\" dari katalog?\nData tetap tersimpan dan bisa ditampilkan lagi oleh admin.");
+>>>>>>> Stashed changes
 
         if (!yakin) {
             e.preventDefault();

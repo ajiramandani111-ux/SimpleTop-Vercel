@@ -14,10 +14,18 @@ function is_logged_in(): bool
 }
 
 // Role akun yang sedang login. Session lama (sebelum kolom role ada)
+<<<<<<< Updated upstream
 // dianggap 'petugas' = hak paling rendah.
 function user_role(): string
 {
     return (string) ($_SESSION['user']['role'] ?? 'petugas');
+=======
+// dianggap 'customer' = hak paling rendah. (Role lama 'petugas' juga
+// diperlakukan sebagai customer: hanya 'admin' yang punya hak kelola.)
+function user_role(): string
+{
+    return (string) ($_SESSION['user']['role'] ?? 'customer');
+>>>>>>> Stashed changes
 }
 
 function is_admin(): bool
@@ -59,6 +67,7 @@ function require_admin(string $redirectTo): void
         exit;
     }
 }
+<<<<<<< Updated upstream
 
 // ---- CSRF (dipakai untuk aksi hapus) ----
 function csrf_token(): string
@@ -79,3 +88,5 @@ function csrf_valid(): bool
     $kirim = $_POST['csrf'] ?? '';
     return is_string($kirim) && !empty($_SESSION['csrf']) && hash_equals($_SESSION['csrf'], $kirim);
 }
+=======
+>>>>>>> Stashed changes

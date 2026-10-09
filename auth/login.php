@@ -19,6 +19,7 @@ include __DIR__ . '/../includes/header.php';
     <p class="auth-subtitle">Silakan masuk untuk berbelanja di SimpleTop</p>
 
     <form action="proses_login.php" method="POST" novalidate>
+        <?php echo csrf_field(); ?>
         <div class="form-group">
             <label for="email">Email</label>
             <div class="input-icon-wrap">

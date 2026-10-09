@@ -9,8 +9,15 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     exit;
 }
 
+<<<<<<< Updated upstream
 $email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
+=======
+csrf_verify('login.php'); // sebelum menyentuh database
+
+$email = trim((string) ($_POST['email'] ?? ''));
+$password = (string) ($_POST['password'] ?? '');
+>>>>>>> Stashed changes
 $ingat = !empty($_POST['ingat']);
 
 $errors = [];
@@ -21,6 +28,13 @@ if ($password === '') {
     $errors[] = "Kata sandi wajib diisi.";
 }
 
+<<<<<<< Updated upstream
+=======
+if (strlen($email) > 255 || strlen($password) > 1024) {
+    $errors[] = "Email atau kata sandi terlalu panjang.";
+}
+
+>>>>>>> Stashed changes
 if (!empty($errors)) {
     $_SESSION['flash'] = ['type' => 'error', 'pesan' => implode(' ', $errors)];
     header('Location: login.php');
@@ -84,12 +98,23 @@ login_clear($pdo, $identifier);
 
 $next = safe_next_path($_SESSION['next'] ?? null);
 
+<<<<<<< Updated upstream
 session_regenerate_id(true);
+=======
+// Cegah session fixation: ID sesi diganti SETELAH login berhasil, dan token
+// CSRF lama dibuang (akan dibuat baru untuk sesi baru).
+session_regenerate_id(true);
+csrf_reset();
+>>>>>>> Stashed changes
 $_SESSION['user'] = [
     'id'    => (int) $userDitemukan['id'],
     'nama'  => $userDitemukan['nama'],
     'email' => $userDitemukan['email'],
+<<<<<<< Updated upstream
     'role'  => $userDitemukan['role'] ?? 'petugas',
+=======
+    'role'  => $userDitemukan['role'] ?? 'customer',
+>>>>>>> Stashed changes
 ];
 unset($_SESSION['next']);
 

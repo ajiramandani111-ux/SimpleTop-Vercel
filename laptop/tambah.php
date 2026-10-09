@@ -1,11 +1,16 @@
 <?php
 require_once __DIR__ . '/../includes/auth.php';
+<<<<<<< Updated upstream
+=======
+require_admin('list.php'); // hanya admin yang boleh menambah produk
+>>>>>>> Stashed changes
 $page_title = "Tambah Laptop";
 include __DIR__ . '/../includes/header.php';
 ?>
 <section>
     <h2>Tambah Laptop</h2>
     <form action="proses_tambah.php" method="POST">
+        <?php echo csrf_field(); ?>
         <div class="form-group">
             <label for="merk">Merk</label>
             <input type="text" id="merk" name="merk" placeholder="Contoh: ASUS" required>
